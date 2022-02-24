@@ -1,4 +1,10 @@
-﻿@page "/"
+﻿@inject HttpClient Http
+@page "/"
+
+foreach(var model in PostsModels)
+{
+    <oj.fe.Components.PostComponent Model="@model"/>
+}
 
 <MudText Typo="Typo.h6">MudBlazor is @Text</MudText>
 <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ButtonOnClick">@ButtonText</MudButton>
@@ -12,5 +18,10 @@
         ButtonClicked += 1;
         Text = $"Awesome x {ButtonClicked}";
         ButtonText = "Click Me Again";
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var PostModels = await Http.GetFromJsonAsync<PostsModel>("url");
     }
 }
