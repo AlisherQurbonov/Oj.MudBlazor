@@ -2,6 +2,6 @@ namespace oj.fe.Models.Posts;
 
 public class Data
 {
-     public List<Result> results { get; set; }
-        public int total { get; set; }
+        public List<Result> Results { get; set; }
+        public int Total { get; set; }
 }

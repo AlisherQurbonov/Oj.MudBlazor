@@ -1,7 +1,8 @@
 ﻿@inject HttpClient Http
+@using System.Text.Json
 @page "/"
 
-foreach(var model in PostsModels)
+@foreach(var model in Model.Data.Results)
 {
     <oj.fe.Components.PostComponent Model="@model"/>
 }
@@ -20,8 +21,10 @@ foreach(var model in PostsModels)
         ButtonText = "Click Me Again";
     }
 
+    public PostsModel Model = new PostsModel(){Data = new() { Results = new()}};
     protected override async Task OnInitializedAsync()
     {
-        var PostModels = await Http.GetFromJsonAsync<PostsModel>("url");
+        Model = await Http.GetFromJsonAsync<PostsModel>("http://ojilmhub.uz/api/announcement?offset=0&limit=10");
+        Console.WriteLine($"{JsonSerializer.Serialize(Model.Data.Results)}");
     }
 }

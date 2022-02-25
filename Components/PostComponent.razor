@@ -1,24 +1,38 @@
+@using System.Text.Json
 
 @page "/post"
 
 <MudCard>
     <MudCardHeader>
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">@Model.data</MudText>
+            <MudText Typo="Typo.h6">@Model.Title</MudText>
         </CardHeaderContent>
         <CardHeaderActions>
             <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
         </CardHeaderActions>
     </MudCardHeader>
     <MudCardContent>
-        <MudText>This day everything happend.</MudText>
-        <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+        <MudText>@Model.Create_time.</MudText>
+        <MudText Typo="Typo.body2">@Model.Created_by.Username</MudText>
     </MudCardContent>
     <MudCardActions>
         <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
     </MudCardActions>
 </MudCard>
+
 @code{
     [Parameter]
-    public PostsModel Model { get; set; }
+    public oj.fe.Models.Posts.Result Model { get; set; }
+    protected override void OnInitialized()
+    {
+        if(Model is not null)
+        {
+            Console.WriteLine(JsonSerializer.Serialize(Model));
+        }
+        else
+        {
+            Console.WriteLine($"Model null keldi");
+            
+        }
+    }
 }
